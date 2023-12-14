@@ -1,0 +1,26 @@
+ln1:
+lista = ("001","002","003","004") #this will be the list of cases or unique Identifiers you want to use
+lista2 = ("a","b","c","d") #same as lista
+variable1 = "Dear Customer, \nThank you for contacting us, we would like you to response to this survey to evaluate our service"#let's call this the template for the email 
+link = "\nlink from pendo,survey monkey,googleform,etc" 
+Ln2:
+import pandas as pd #Import pandas
+
+Ln3:
+result = pd.DataFrame() #Variable where we want to store the data from our DF
+#The for loop below will be used to create the iteration of the "lista" list, where we wanto to make sure we include all the unique identifiers of our 
+#email, this identifiers will help in case we want to add the information to a case once we get the answer from our customers
+for i in lista:
+    dato = pd.DataFrame( #dato is the variable used to to store our iterated data
+        { "v1" : [i], #runs the for loop through the list of cases
+         "v2": [variable1]}, #this will never change, it's the same as it is a template for the email
+    
+    )
+    result = pd.concat([result,dato],ignore_index = True) #we create our DataFrame with a customer index, could be ignores if you want to use a column as index
+
+result  #check for the dataframe info
+
+Ln4:
+with pd.ExcelWriter("C:/Users/Ideapad/Desktop/test_sheets.xlsx") as writer: #it depends on how you send the surveys, but let's asume you have two different LOB's to send the cases, you want to have the data organized by LOB
+    result.to_excel(writer, sheet_name="numeros")
+    result2.to_excel(writer, sheet_name="letras")
